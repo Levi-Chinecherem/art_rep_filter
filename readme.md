@@ -1,131 +1,129 @@
-# PDF Sustainability Report Analysis
 
-This project analyzes PDF sustainability reports and identifies mentions of various sustainability frameworks and standards. It utilizes Natural Language Processing (NLP) techniques to extract relevant content, match it with predefined keywords, and provide insights into the context of those mentions. The result is a detailed report, showing which sustainability standards (e.g., ISSB, GRI, TCFD) are mentioned in each report, along with the specific sentences and context where they appear.
+# Sustainability PDF Analysis
+
+This project is designed to analyze sustainability-related content in PDF documents by searching for specific frameworks and standards such as ISSB, GRI, TCFD, OECD, and UN Principles. It uses a combination of basic keyword matching and advanced contextual analysis based on sentence embeddings to identify relevant sections of the PDFs and provide detailed results.
 
 ## Features
 
-- **PDF Text Extraction**: Extracts text from PDF reports.
-- **Keyword Matching**: Identifies relevant mentions of sustainability standards (e.g., ISSB, GRI, TCFD, etc.) using keyword-based matching.
-- **Contextual Matching**: Utilizes spaCy's NLP capabilities and sentence embeddings from Sentence-Transformers for more advanced contextual understanding.
-- **Page-Level Reporting**: Provides the page number where each relevant sentence is found in the PDF.
-- **Similarity Scoring**: For contextual matches, provides a similarity score to indicate how closely the sentence matches the relevant keyword or framework.
-- **Output CSV**: Outputs the results in a CSV file for easy reporting and further analysis.
+- Extracts text from PDF documents using two methods: `pdfplumber` and `PyPDF2`.
+- Searches for sustainability-related frameworks and standards within the text.
+- Performs basic keyword matching to find relevant sentences.
+- Uses advanced contextual matching with sentence embeddings to measure similarity between sentences and keywords.
+- Extracts entities related to sustainability or business (e.g., organizations, geographical locations) from the text using spaCy.
+- Outputs results in a detailed and structured format, including a CSV file for easy analysis.
 
 ## Requirements
 
-- **Python 3.7+**
-- **Libraries**:
-  - `pdfplumber`: For extracting text from PDF documents.
-  - `spacy`: For basic NLP processing.
-  - `sentence-transformers`: For advanced contextual analysis using sentence embeddings.
-  - `PyPDF2`: For reading and extracting text from PDFs.
-  - `pandas`: For organizing and outputting the results in a tabular format.
+To run this project, you'll need the following Python packages:
 
-To install the required dependencies, run:
+- `pdfplumber` for extracting text from PDFs.
+- `spacy` for natural language processing and entity extraction.
+- `PyPDF2` for PDF text extraction.
+- `sentence-transformers` for advanced contextual matching with sentence embeddings.
+- `pandas` for organizing and displaying the results in a structured format.
+
+You can install the required dependencies using `pip`:
 
 ```bash
-pip install pdfplumber spacy sentence-transformers PyPDF2 pandas
+pip install pdfplumber spacy PyPDF2 sentence-transformers pandas
+```
+
+Additionally, you will need to download the spaCy model for natural language processing:
+
+```bash
 python -m spacy download en_core_web_sm
 ```
 
 ## Setup
 
-1. **Clone this repository**:
+1. Clone the repository:
+
    ```bash
-   git clone https://github.com/yourusername/sustainability-report-analysis.git
-   cd sustainability-report-analysis
+   git clone https://github.com/yourusername/sustainability-pdf-analysis.git
+   cd sustainability-pdf-analysis
    ```
 
-2. **Install dependencies**:
+2. Install the required dependencies:
+
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Download spaCy model**:
+3. Download the spaCy model:
+
    ```bash
    python -m spacy download en_core_web_sm
    ```
 
 ## Usage
 
-1. **Prepare your PDFs**:
-   Place the PDF files you want to analyze in the same directory or specify the path in the `pdf_paths` list in the script.
+1. Place the PDFs you want to analyze in the project directory.
+   
+2. Update the `pdf_paths` list in the script to include the paths to the PDF files you want to analyze.
 
-2. **Run the analysis**:
-   Execute the script to process the PDFs and generate the analysis:
+3. Run the script:
 
-   ```python
-   from analysis import analyze_pdfs
-
-   # List of PDF file paths to analyze
-   pdf_paths = ['Report1.pdf', 'Report2.pdf', 'Report3.pdf']
-
-   # Run the analysis
-   results = analyze_pdfs(pdf_paths)
-
-   # View the results in a DataFrame
-   import pandas as pd
-   df = pd.DataFrame(results)
-   print(df)
-
-   # Save the results to a CSV file
-   df.to_csv('sustainability_analysis.csv', index=False)
+   ```bash
+   python analyze_pdfs.py
    ```
 
-   The script will process each PDF in the `pdf_paths` list, extracting relevant content, matching it with the predefined sustainability frameworks, and saving the results in a CSV file (`sustainability_analysis.csv`).
+   The script will process the PDFs and display the results in a tabular format in the console.
 
-## Output
+4. A CSV file (`sustainability_analysis.csv`) will be generated containing the detailed results of the analysis, including:
 
-The output will be a CSV file containing detailed analysis for each PDF report. The CSV will contain the following columns:
+   - The PDF file name and page number.
+   - The framework or standard (e.g., ISSB, GRI, TCFD, OECD, UN Principles).
+   - Whether any mentions of the standard were found.
+   - The sentence containing the keyword or framework.
+   - Contextual matching details with sentence similarity.
+   - Basic keyword matching results.
 
-| Column         | Description                                                               |
-|----------------|---------------------------------------------------------------------------|
-| **File**       | The name of the PDF file being analyzed.                                  |
-| **Page Number**| The page number where the relevant sentence was found.                    |
-| **Standard**   | The sustainability standard or framework (e.g., ISSB, GRI, TCFD).         |
-| **Description**| A brief description indicating whether the standard is mentioned or not.  |
-| **Evidence**   | The keyword found in the sentence that matched the framework.             |
-| **Sentence**   | The full sentence from the PDF where the framework or standard is mentioned. |
-| **Context**    | The context of the mention, including entities identified in the sentence (e.g., organization names, locations). |
-| **Similarity** | For contextual matches, the similarity score between the sentence and the keyword. |
+## Example Output
 
-### Example Output
+Here is an example of how the output might look in the CSV file:
 
-| File          | Page Number | Standard | Description                   | Evidence                | Sentence                                                                                     | Context                             | Similarity |
-|---------------|-------------|----------|-------------------------------|-------------------------|----------------------------------------------------------------------------------------------|-------------------------------------|------------|
-| Report1.pdf   | 1           | ISSB     | Mentions ISSB                 | IFRS S1                 | "The IFRS S1 standard outlines the approach for reporting sustainability risks."             | Entities: ["IFRS", "Financial"]    | 0.75       |
-| Report1.pdf   | 2           | GRI      | Mentions GRI                  | sustainable development | "The company follows GRI guidelines to ensure sustainable development in its operations."     | Entities: ["GRI", "company"]       | 0.80       |
-| Report2.pdf   | 3           | TCFD     | No mentions found for TCFD    |                         | "The company has no specific policy regarding climate-related financial disclosures."        | No entities found                  | N/A        |
-| Report2.pdf   | 4           | OECD     | Mentions OECD                 | human rights            | "The organization adheres to OECD guidelines on human rights and responsible business."      | Entities: ["OECD", "organization"] | 0.85       |
-| Report3.pdf   | 1           | UN Principles | No mentions found for UN Principles |                | "This report does not reference any UN sustainability principles."                           | No entities found                  | N/A        |
-
-## Customizing the Standards and Keywords
-
-To customize the sustainability standards and the related keywords, modify the `keywords` and `framework_keywords` dictionaries in the script. Each dictionary contains a set of frameworks and their respective keywords or phrases that will be searched in the PDF text.
-
-```python
-keywords = {
-    'ISSB': ['ISSB Standards', 'IFRS S1', 'IFRS S2', 'ISSB Framework', 'International Sustainability Standards Board'],
-    'GRI': ['GRI Standards', 'Global Reporting Initiative'],
-    'TCFD': ['TCFD', 'Task Force on Climate-related Financial Disclosures'],
-    'OECD': ['OECD Guidelines'],
-    'UN': ['UN Principles']
-}
-```
-
-For more complex frameworks, you can expand the `framework_keywords` dictionary to include additional terms or patterns relevant to the framework.
+| File           | Page Number | Standard  | Description                           | Evidence              | Sentence                                           | Contextual Matches                                              | Basic Matches                           |
+|----------------|-------------|-----------|---------------------------------------|-----------------------|---------------------------------------------------|----------------------------------------------------------------|----------------------------------------|
+| Report1.pdf    | 1           | ISSB      | Mentions ISSB                         | ISSB Standards        | "The ISSB Standards provide guidelines..."      | {'Framework': 'ISSB', 'Sentence': 'The ISSB Standards provide...', 'Context': 'Entities: [ISSB, Finance]', 'Similarity': 0.75} | [{'Framework': 'ISSB', 'Sentence': 'The ISSB Standards provide...', 'Context': 'No additional context', 'Similarity': 'N/A'}] |
+| Report2.pdf    | 2           | GRI       | Mentions GRI                          | GRI Standards         | "According to the GRI Standards, businesses..." | {'Framework': 'GRI', 'Sentence': 'According to the GRI Standards...', 'Context': 'Entities: [GRI, Stakeholders]', 'Similarity': 0.80} | [{'Framework': 'GRI', 'Sentence': 'According to the GRI Standards...', 'Context': 'No additional context', 'Similarity': 'N/A'}] |
+| Report3.pdf    | 3           | OECD      | No mentions found for OECD            |                       | "No relevant content found"                    |                                                                |                                        |
 
 ## Contributing
 
-Contributions are welcome! If you find a bug or want to suggest an enhancement, please fork the repository, make your changes, and submit a pull request.
+If you would like to contribute to this project, feel free to fork the repository and submit a pull request. Here are a few ways you can contribute:
 
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-branch`).
-3. Make your changes.
-4. Commit your changes (`git commit -m 'Added new feature'`).
-5. Push to the branch (`git push origin feature-branch`).
-6. Open a pull request.
+- Improve the accuracy of the keyword matching and contextual analysis.
+- Add support for additional sustainability standards and frameworks.
+- Improve performance when processing large PDFs.
+- Provide better handling for edge cases or errors during PDF extraction.
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [pdfplumber](https://github.com/jsvine/pdfplumber) for PDF text extraction.
+- [spaCy](https://spacy.io/) for natural language processing.
+- [sentence-transformers](https://www.sbert.net/) for advanced contextual sentence matching.
+- [PyPDF2](https://pythonhosted.org/PyPDF2/) for PDF text extraction.
+- [pandas](https://pandas.pydata.org/) for data manipulation and analysis.
+```
+
+### Key Sections Explained:
+
+1. **Introduction**: Briefly explains the purpose of the project, which is to analyze sustainability-related content in PDFs using keyword and contextual matching.
+  
+2. **Requirements**: Lists the necessary Python packages and provides installation commands.
+
+3. **Setup**: Instructions on cloning the repository, installing dependencies, and setting up the spaCy model.
+
+4. **Usage**: Details on how to use the script, including how to run the analysis and where to find the output.
+
+5. **Example Output**: Provides an example of how the results will appear, including both basic keyword matches and contextual sentence matching.
+
+6. **Contributing**: Encourages others to contribute to the project by improving features or fixing bugs.
+
+7. **License**: Specifies that the project is licensed under the MIT License.
+
+8. **Acknowledgments**: Credits the libraries and tools used in the project. 
