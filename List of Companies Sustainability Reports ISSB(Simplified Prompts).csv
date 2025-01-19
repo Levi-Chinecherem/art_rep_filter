@@ -1,0 +1,68 @@
+Optimized AI Command Prompts (Simplified and Expanded)
+
+Step 1: Screening Sustainability Reports
+
+"1. Task Identification: ""Screen the given sustainability report and identify specific criteria as per the provided instructions."""
+2. Detailed Criteria Screening:
+"""Does the report explicitly state alignment with ISSB Standards? Look for keywords like 'ISSB Standards,' 'IFRS SI', 'IFRS S2', 'ISSB Framework,' or references to 'International Sustainability Standards Board.'"""
+"""Identify any mentions of the reporting standards or frameworks being followed. Create a list of all standards/frameworks mentioned, such as GRI, SASB, TCFD, or ISSB."""
+"3. Data Extraction: ""For each standard or framework identified, note any details about how the company claims alignment or implementation."""
+
+
+
+Step 2: Providing a Definition for Screening
+
+"4. Definition Guidance: ""Use the provided definition of ISSB alignment to aid in determining whether the report aligns with ISSB Standards."""
+"Use the definition provided:
+'Currently aligning with the ISSB Standards means a company referenced the ISSB in the context of its current alignment in reporting with the sustainability-related disclosure requirements in ISSB Standards.'"""
+
+
+
+Step 3: Enhancing AI Training for ISSB Analysis
+
+"5. ""Identify phrases indicating alignment with ISSB Standards. Examples include: for Training AI:"
+"""This report adheres to ISSB Standards, as it includes detailed disclosures on sustainability materiality and financial impact analysis."""
+"""Our company complies with ISSB Standards, integrating TCFD recommendations as a basis for sustainability disclosures."""
+'We have started to align our reporting with the ISSB Standards.'
+"'This year, the company also considered the new ISSB Standards in completing this report and included relevant indicators.'"
+
+"Expand examples to include variations in phrasing, such as:"
+'Our disclosures have been enhanced by integrating elements of the ISSB Standards.'
+'The report aligns with the guidelines set out by IFRS S1 and IFRS S2.'
+"'We have adopted the ISSB framework for sustainability reporting.'"""
+
+Step 4: Iterative Refinement
+"6. Iterative Refinement: ""After screening, re-evaluate the criteria for ISSB alignment if discrepancies are found in the reports. Adjust the analysis method to ensure consistent interpretation of standards across multiple reports."""
+
+
+Step 5: Screening Classifications/ Structuring Output Data in a Table
+7. Prompt for Standards/Frameworks Reported Against:
+"""Check if the company reports align with the standards/frameworks mentioned in the report'' (e.g., ISSB, GRI Standards, CSRD). Use the concept definition approach:"
+Identify whether the company explicitly claims alignment.
+"Look for context showing how the standard/framework was considered or implemented."""
+
+"8. Output Structure: ""Organize the findings in a table with the following columns:"
+Standard/Framework Reported Against
+Description of Alignment or Mention
+Evidence or Key Statement from Report
+Page Number or Section Referenced
+Actual Alignment Verified
+"Other Frameworks Mentioned (e.g., OECD Guidelines, UN Principles)."""
+
+9. Sample Table Template for AI Output:
+vbnet
+CopyEdit
+| Standard/Framework | Description of Alignment or Mention                 | Evidence or Key Statement                         | Page Number/Section |
+|---------------------|----------------------------------------------------|--------------------------------------------------|---------------------|
+"| ISSB               | Partially aligned; mentions adherence to TCFD      | 'We align with ISSB through TCFD integration.'   | Page 12, Sustainability Overview |"
+"| GRI                | Fully aligned; references GRI Standards explicitly | 'This report follows GRI Standards: Core option.'| Page 8, Reporting Framework |"
+
+Step 6: Advanced Analysis
+10. Command Prompt for Additional Context Analysis:
+"""Analyze the report for detailed evidence of alignment with frameworks. Check for:"
+Specific actions taken to align with the standards.
+Indicators or metrics referenced from the standards/frameworks.
+"Explicit mentions of guidelines or principles used in reporting."""
+
+11. Prompt for Insight Extraction:
+"""Extract key statements and contextual evidence supporting or contradicting alignment with any mentioned standards/frameworks."""
